@@ -1,5 +1,6 @@
 import express from 'express'
 import Client from '../models/client.js'
+import Account from '../models/account.js'
 
 const router = express.Router()
 
@@ -54,6 +55,9 @@ router.delete('/:id', async (req, res)=>{
         const id = req.params.id
         const client = await Client.findByIdAndDelete(id)
         if(!client) return res.status(404).json({message: 'client not found'})
+
+        await Account.deleteMany({clientId: id})
+        
         res.json({message: 'client deleted'})
     }catch(err){
         console.log(err);
