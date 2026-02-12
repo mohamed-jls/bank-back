@@ -1,11 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from 'cors'
+import dotenv from 'dotenv'
 import clientRoute from "./routes/clientRoute.js";
 import accountRoute from "./routes/accountRoute.js";
 
+dotenv.config()
+
 mongoose
-    .connect("mongodb://localhost:27017/bank")
+    .connect(process.env.MONGO_URI)
     .then(() => console.log("✅ connected to database"))
     .catch((err) => console.log("❌failed to connect to database: ", err));
 
